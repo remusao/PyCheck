@@ -1,0 +1,10 @@
+###        ###
+##   TODO   ##
+###        ###
+
+
+~ Implement an external test management (via objects)
+~ Implemente the visitor design pattern
+
+~ Get ride of the 'src' in the display.py / result function
+~ Stop creating tmp files for the pretty-printer test

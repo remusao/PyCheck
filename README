@@ -1,0 +1,24 @@
+###                    ###
+##   README : PyCheck   ##
+###                    ###
+
+
+~ Synopsis :
+
+  """
+    PyCheck is a Python project that aims to provide a nice-looking
+    test-suit for projects of any size. With PyCheck, it's really easy
+    to manage tests (add, remove, rename categories, add categories, etc.)
+    In addition, you have a nice output and a readable overview of the
+    results thanks to the graphics and the history which is automagically
+    saved in a DataBase.
+  """
+
+
+~ Dependencies :
+
+  - Python 2.7x
+  - Pygame (optionnal, recquiered if you want graphical output)
+
+
+~ Usage :
