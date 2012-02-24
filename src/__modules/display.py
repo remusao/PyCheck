@@ -1,38 +1,51 @@
-"""
-  Deals with displaying informations in the term
-"""
+################################################################################
+#
+#  PyCheck is a general purpose test_suit for project of any size.
+#
+#  Copyright (C) 2011-2012  Remi BERSON - Romain GUYOT DE LA HARDROUYERE
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+################################################################################
+
+
+from test_tree import TestTree
+
 
 lar = 80
 #lar = os.environ['COLUMNS']  #width of the result form
 
 
-def success(f, info):
+def printSuccess(f):
   """
     Print the right output in case of success
   """
   print f + ' ' * (lar - len(f) - 2) + '\033[32m' + 'OK' + '\033[37m'
-  return 0
 
 
-def fail(f, info, timeout, process):
+def printFail(f, error):
   """
     Print the right output in case of fail (wrong returncode or timeout)
   """
-  if timeout:
-    process.terminate()
-    print 'timeout'
-  else:
-    col = '\033[32m' * 6
-    m = '(expected : ' + '\033[32m' + info['return'] + '\033[37m' +            \
-      ', returned : ' + '\033[33m' +  str(process.returncode) + '\033[37m' +   \
-      ')   ' + '\033[31m' + 'KO' + '\033[37m'
-    print f + ' ' * (lar - len(m) - len(f) + len(col)) +  m
-    return 1
+  col = '\033[37m' * (error[0] + 2)
+  m = error[1] + '\033[31m' + '   KO' + '\033[37m'
+  print f + ' ' * (lar - len(m) - len(f) + len(col)) +  m
 
 
 def printHeader(c, level):
   """
-    Write the right header according to the categorie and its level
+    Write the right header according to the category and its level
   """
   if level is 1:
     mult = (lar - len(c)) / 2
@@ -73,50 +86,43 @@ def printBar(cat, result, catMaxi, maxiFail, maxiSucc):
     print ''.join(bar)
 
 
-def get_max(cat):
+def get_max(tree):
   """
     Parse the cat list and get :
-      - The maximum categorie name size
-      - The maximum sucess result size
-      - The maximum fail result size
+      0) The len of the longest category's name
+      1) The len of the maximum number of success
+      2) The len of the maximum number of fails
   """
-  maxi = 0
-  maxiSucc = 0
-  maxiFail = 0
-  for c in cat:
-    if cat[c][0] > maxiSucc:
-      maxiSucc = cat[c][0]
-    if cat[c][1] > maxiFail:
-      maxiFail = cat[c][1]
-    if len(c) > maxi:
-      maxi = len(c)
+  maxi = [len(tree.cat), tree.success, tree.fail]
 
-  return maxi, maxiSucc, maxiFail
+  for sub in tree.subcat:
+    max_name, max_succ, max_fail = get_max(sub)
+    maxi[0] = max(max_name, maxi[0])
+    maxi[1] = max(max_succ, maxi[1])
+    maxi[2] = max(max_fail, maxi[2])
+
+  return maxi
 
 
-def result(cat):
+def result_rec(tree, maxi):
+  """
+    Parse the tree and print a htop bar for each main category
+  """
+  printBar(tree.cat, (tree.success, tree.fail), maxi[0], maxi[1], maxi[2])
+
+
+def printResult(tree):
   """
     Print the results in a beautiful form
   """
-  print '\n'
+  print
   printHeader('# Summary #', 1)
+  print
+  maxi, maxiSucc, maxiFail = get_max(tree)
 
-  # Get the size of the longest category
-  maxi, maxiSucc, maxiFail = get_max(cat)
-
-  # Save total and remove it from the cat dic
-  total = cat['src']
-  cat['all'][0] = total[0]
-  cat['all'][1] = total[1]
-  del cat['src']
-
-  # Print result of each cat
-  for c in cat:
-    if c != 'all':
-      printBar(c, cat[c], maxi, maxiFail, maxiSucc)
+  for sub in tree.subcat:
+    result_rec(sub, (maxi, maxiFail, maxiSucc))
 
   # Print the total
-  print '\n'
-  printBar('Total', total, maxi, maxiFail, maxiSucc)
-
-
+  print
+  printBar('Total', (tree.success, tree.fail), maxi, maxiFail, maxiSucc)
