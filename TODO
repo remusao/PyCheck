@@ -2,9 +2,7 @@
 ##   TODO   ##
 ###        ###
 
-
-~ Implement an external test management (via objects)
-~ Implemente the visitor design pattern
+~ When running test, maj the success / fail of the sur-category
 
 ~ Get ride of the 'src' in the display.py / result function
 ~ Stop creating tmp files for the pretty-printer test
