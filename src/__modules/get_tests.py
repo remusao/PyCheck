@@ -21,11 +21,11 @@
 
 
 import sys, os 
-from test import Test
+from Customize_me import Test
 from test_tree import TestTree
 
 
-class Get():
+class Build():
   """
     Module that will parse the subdirectories to find all tests files and build
     a TestTree with them
@@ -63,9 +63,12 @@ class Get():
       if os.path.isdir(f):
         os.chdir(f)
         cat.subcat.append(self._gen_tree(level + 1))
+        cat.total += cat.subcat[-1].total
         os.chdir('../')
       elif level > 0:
-        cat.tests.append(f)
+        cat.tests.append(Test(cat.info, f, cat_name))
+
+    cat.total += len(cat.tests)
 
     return cat
 

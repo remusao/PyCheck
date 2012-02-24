@@ -20,7 +20,7 @@
 ################################################################################
 
 
-from test import Test
+from Customize_me import Test
 from test_tree import TestTree
 from display import *
 

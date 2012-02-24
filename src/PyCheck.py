@@ -24,8 +24,7 @@
 import sys
 
 sys.path.append('__modules')
-from get_tests import Get
-from build_tests import Build
+from get_tests import Build
 from pargs import Parse_arg
 from run_tests import Run
 
@@ -70,8 +69,7 @@ def main():
   task = Task()
 
   task.add(Parse_arg())
-  task.add(Get(0))
-  task.add(Build())
+  task.add(Build(0))
   task.add(Run())
 
   result = task()

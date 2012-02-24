@@ -37,6 +37,8 @@ class TestTree():
   """
 
   def __init__(self, level, prefix, cat):
+    """
+    """
     self.cat = cat
     self.prefix = prefix
     self.level = level
@@ -51,12 +53,13 @@ class TestTree():
 
 
   def pretty_print(self):
-    space = ' ' * (self.level * 2)
+    """
+    """
+    space = ' ' * (self.level * 4)
     print space, 'category :', self.cat
     print space, 'prefix :', self.prefix
     print space, 'level :', self.level
     print space, 'info :', self.info
-    print space, 'tests :', self.tests
     print space, 'total :', self.total, ' | success :', self.success, \
                  ' | fail :', self.fail
     print space, '--------------------'
