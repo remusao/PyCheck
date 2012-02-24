@@ -21,7 +21,7 @@
 
 
 import sys, os 
-from test_custom import Test
+from test import Test
 from test_tree import TestTree
 
 
