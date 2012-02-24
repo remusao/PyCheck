@@ -51,6 +51,7 @@ class Run():
     """
     printHeader(tree.cat, tree.level)
     tree.total = len(tree.tests)
+    success, fail = 0, 0
 
     for test in tree.tests:
       res = test.run()
@@ -62,4 +63,8 @@ class Run():
         printFail(test.f, test.error_get())
 
     for sub in tree.subcat:
-      self._run_tests(sub)
+      tmp_succ, tmp_fail = self._run_tests(sub)
+      success += tmp_succ
+      fail += tmp_fail
+
+    return success, fail
