@@ -41,10 +41,11 @@ class Parse_arg():
       else:
         self.info[tmp[0]] = None
 
+    print args
     del args['other']
     for arg in args:
       self.info[arg] = args[arg]
-    
+
 
 
   def __call__(self, info):
@@ -56,20 +57,21 @@ class Parse_arg():
     parser = argparse.ArgumentParser(description='Pycheck default')
 
     parser.add_argument('--version', action='version', version='Pycheck version 0.42')
-    parser.add_argument('-p', '--prettyprint', default=False, action='store_true',      \
+    parser.add_argument('-p', '--prettyprint', action='store_true',                       \
         help='Pretty print the TestTree')
-    parser.add_argument('-t', '--timeout', type=int,                                    \
+    parser.add_argument('-t', '--timeout', type=int, default=info['timeout'],             \
         help='When running tests, check if the tests timeout, abort then in that case')
-    parser.add_argument('-m', '--mem-check', default=False, action='store_true',        \
+    parser.add_argument('-m', '--memcheck', default=info['memcheck'], action='store_true',\
         help='When running tests, look for memory leaks')
-    parser.add_argument('-c', '--categories', nargs='+', default=['all'],               \
+    parser.add_argument('-c', '--categories', nargs='+', default=['all'],                 \
         metavar='Category' ,help='Specifies the categories to test')
-    parser.add_argument('-nv', '--noverbose', default=False, action='store_true',       \
+    parser.add_argument('-nv', '--noverbose', dest='verbose', default=info['verbose'],    \
+        action='store_false',                                                             \
         help='Specifies a non-verbose ouput. By default the output is verbose.')
-    parser.add_argument('-o', '--output', nargs='+', metavar='file_format',             \
+    parser.add_argument('-o', '--output', nargs='+', metavar='file_format',               \
         help='Output result in a specific format (latex, html, picture, etc..)')
-    parser.add_argument('--other', nargs='+', metavar='custom_arg', default=[],         \
-        help='Allow the user to specify custom arguments of the form args1=something1   \
+    parser.add_argument('--other', nargs='+', metavar='custom_arg', default=[],           \
+        help='Allow the user to specify custom arguments of the form args1=something1     \
         arg2=something2')
 
     args = vars(parser.parse_args())

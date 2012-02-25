@@ -35,7 +35,7 @@ def prelude():
 
 
 
-def end():
+def epilog():
   """
     You can do here something that will be done after everything else
   """

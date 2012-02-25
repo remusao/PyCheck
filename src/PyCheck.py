@@ -25,6 +25,7 @@ import sys
 
 sys.path.append('__modules')
 from Customize_me import *
+from config import Config
 from get_tests import Build
 from parse_arg import Parse_arg
 from run_tests import Run
@@ -57,29 +58,37 @@ class Task():
       Run the tasks one by one
     """
     result = {}
+  #  try:
     for task in self.tasks:
       result = task(result)
-
+  #  except Exception as e:
+  #    print e
+  #  finally:
     return result
-
 
 
 
 def main():
 
+  # Prolog
   logo_print()
   prelude()
 
+  # Create the task manager
   task = Task()
 
+  # Add tasks
+  task.add(Config())
   task.add(Parse_arg())
   task.add(Build(0))
   task.add(Run())
 
+  # Launch tasks
   result = task()
-  result['TestTree'].pretty_print()
+  print result
 
-  end()
+  # Call the 
+  epilog()
 
 
 if __name__ == '__main__':
