@@ -29,6 +29,7 @@ from config import Config
 from get_tests import Build
 from parse_arg import Parse_arg
 from run_tests import Run
+from output import Output
 
 
 class Task():
@@ -82,6 +83,7 @@ def main():
   task.add(Parse_arg())
   task.add(Build(0))
   task.add(Run())
+  task.add(Output())
 
   # Launch tasks
   result = task()

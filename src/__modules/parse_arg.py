@@ -41,7 +41,6 @@ class Parse_arg():
       else:
         self.info[tmp[0]] = None
 
-    print args
     del args['other']
     for arg in args:
       self.info[arg] = args[arg]
@@ -68,11 +67,12 @@ class Parse_arg():
     parser.add_argument('-nv', '--noverbose', dest='verbose', default=info['verbose'],    \
         action='store_false',                                                             \
         help='Specifies a non-verbose ouput. By default the output is verbose.')
-    parser.add_argument('-o', '--output', nargs='+', metavar='file_format',               \
+    parser.add_argument('-o', '--output', nargs='+', default=info['output'],              \
+        metavar='file_format',                                                            \
         help='Output result in a specific format (latex, html, picture, etc..)')
-    parser.add_argument('--other', nargs='+', metavar='custom_arg', default=[],           \
-        help='Allow the user to specify custom arguments of the form args1=something1     \
-        arg2=something2')
+    parser.add_argument('--other', nargs='+', metavar='custom_arg',                       \
+        default=info['output'], help='Allow the user to specify custom arguments of the   \
+        form args1=something1 arg2=something2')
 
     args = vars(parser.parse_args())
     self._maj_info(args)
