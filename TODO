@@ -4,7 +4,12 @@
 
 ~ Get ride of the 'src' in the display.py / result function
 ~ dependencies system in the command design pattern
-~ Make the Task manager, managing also the command-line arguments
 ~ output.py module to output files like html, image, latex, etc..
 ~ Config file to determine some general options
 ~ Timeout management
+~ Mem check
+~ Categories selection
+~ verbosity
+~ pretty-printer
+~ output module
+~ Add a multithread option
