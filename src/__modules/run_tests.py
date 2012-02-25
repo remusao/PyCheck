@@ -54,7 +54,7 @@ class Run():
     success, fail = 0, 0
 
     for test in tree.tests:
-      res = test.run()
+      res = test(tree.info)
       if res:
         tree.success += 1
         printSuccess(test.f)

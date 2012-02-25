@@ -19,20 +19,42 @@
 #
 ################################################################################
 
+def logo_print():
+  """
+    If you want to print a logo when the test_suit is runned
+  """
+  return
+
+
+
+def prelude():
+  """
+    You can do here something that you want *before* everything starts
+  """
+  return
+
+
+
+def end():
+  """
+    You can do here something that will be done after everything else
+  """
+  return
+
+
 
 class Test:
   """
     The class you must customize to do the tests you want on each file
   """
 
-  def __init__(self, info, f, category):
+  def __init__(self, prefix, f, category):
     """
-      info : dictionary that contains every option present either in the info
-        file in the directory of this test or in de command-line options.
+      prefix : contains the absolute prefix of the file (eg : /home/...)
       f : name of the file that contains the test
       category : name of the category
     """
-    self.info = info
+    self.prefix = prefix
     self.f = f
     self.category = category
     self.result = True
@@ -49,14 +71,22 @@ class Test:
                      self.category,
                      'success')
 
+  def __call__(self, info):
+    """
+      Your test will be exec this way, by calling it
+      (eg : my_test (info)).
+      Info is a dictionary that contains every options present
+      in the info file, the command line or the config file.
+    """
+    self.info = info
+    self.result = self.run()
+    return self.result
 
   def run(self):
     """
-      1) Run the test, you can do anything you want but you must
+      Run the test, you can do anything you want but you must
       return True (if the tests has succeeded) of False (otherwise)
-      2) You must write this value in the self.result attribute
     """
-    self.result = False
     return True
 
 

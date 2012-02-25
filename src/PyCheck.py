@@ -24,8 +24,9 @@
 import sys
 
 sys.path.append('__modules')
+from Customize_me import *
 from get_tests import Build
-from pargs import Parse_arg
+from parse_arg import Parse_arg
 from run_tests import Run
 
 
@@ -66,6 +67,9 @@ class Task():
 
 def main():
 
+  logo_print()
+  prelude()
+
   task = Task()
 
   task.add(Parse_arg())
@@ -73,6 +77,9 @@ def main():
   task.add(Run())
 
   result = task()
+  result['TestTree'].pretty_print()
+
+  end()
 
 
 if __name__ == '__main__':

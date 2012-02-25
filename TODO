@@ -7,3 +7,4 @@
 ~ Make the Task manager, managing also the command-line arguments
 ~ output.py module to output files like html, image, latex, etc..
 ~ Config file to determine some general options
+~ Timeout management

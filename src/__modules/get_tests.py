@@ -66,7 +66,7 @@ class Build():
         cat.total += cat.subcat[-1].total
         os.chdir('../')
       elif level > 0:
-        cat.tests.append(Test(cat.info, f, cat_name))
+        cat.tests.append(Test(prefix, f, cat_name))
 
     cat.total += len(cat.tests)
 
