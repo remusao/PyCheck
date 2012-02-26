@@ -22,6 +22,7 @@
 
 from Customize_me import Test
 from test_tree import TestTree
+from display import printHeader
 from db import *
 from graph import *
 
@@ -39,19 +40,38 @@ class Output():
     self.info = info
     out_list = info['output']
 
+    if self.info['prettyprint']:
+      out_list.append('prettyprint')
+
     if out_list:
-      # sumup test that failed and print details about them
-      if 'sumup' in out_list:
-        self._sumup()
-      # Log results in db and print graph
-      if 'graph' in out_list:
-        self._db_graph()
-    if 'prettyprint' in self.info:
-      if self.info['prettyprint']:
-        print
-        self.info['TestTree'].pretty_print()
+      for module in out_list:
+        self._launch_output(module)
+    print
 
     return info
+
+
+  def _launch_output(self, name):
+    """
+      Given a module name (or whatever), will launch the good output
+    """
+    if name is 'sumup':
+      print
+      printHeader('# Fails Summary #', 1)
+      print
+      self._sumup()
+    elif name is 'graph':
+      print
+      printHeader('# Graph #', 1)
+      print
+      self._db_graph()
+    elif name is 'prettyprint':
+      print
+      printHeader('# Pretty Printing #', 1)
+      print
+      confirm = raw_input('Do you want to pretty_print the TestTree ? (y/n) ')
+      if confirm == 'y' or confirm == 'Y':
+        self.info['TestTree'].pretty_print()
 
 
   def _db_graph (self):
@@ -65,7 +85,6 @@ class Output():
     db_create_if_need(cursor)
     db_insert(cursor, tree.success, tree.fail)
 
-    print
     confirm = raw_input('Do you want to display the graph ? (y/n) ')
     if confirm == 'y' or confirm == 'Y':
       cat = {}
@@ -82,14 +101,10 @@ class Output():
     """
       Display the tests that failed with useful informations
     """
-    print
     confirm = raw_input('Do you want to display a sum-up ? (y/n) ')
     if confirm != 'y' and confirm != 'Y':
       return
 
-    print
-    print "__--* Sumup of the fails *--__"
-    print
 
     for sub in self.info['TestTree'].subcat:
       self._print_rec_sumup(sub)
