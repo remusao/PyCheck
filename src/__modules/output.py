@@ -48,6 +48,7 @@ class Output():
         self._db_graph()
     if 'prettyprint' in self.info:
       if self.info['prettyprint']:
+        print
         self.info['TestTree'].pretty_print()
 
     return info

@@ -87,7 +87,6 @@ def main():
 
   # Launch tasks
   result = task()
-  print result
 
   # Call the 
   epilog()

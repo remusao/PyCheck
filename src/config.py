@@ -50,7 +50,7 @@ class Config():
     # Type = [string]
     # Default = ./
 
-    info['test_path'] = ['./']
+    info['test_path'] = ['./', '~/Miniproj/TC3/berson_r/']
 
 
     ############################### __ FILE_EXT __  ############################
@@ -58,7 +58,7 @@ class Config():
     # type = [string]
     # Default = ['*']
 
-    info['file_ext'] = ['.*']
+    info['file_ext'] = ['.*leo']
 
 
     ############################### __ BLACKLIST __  ###########################
