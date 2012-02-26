@@ -2,11 +2,17 @@
 ##   TODO   ##
 ###        ###
 
-~ Support display and db modules
-~ dependencies system in the command design pattern
-~ output.py module to output files like html, image, latex, etc..
-~ Timeout management
-~ Mem check
-~ Categories selection
-~ verbosity
-~ Add a multithread option
+GENERAL :
+  - Support display and db modules
+  - Dependencies system in the command design pattern
+  - complete output.py module
+  - timeout management
+
+
+OPTIONS :
+  - Verbosity
+  - MemCheck
+  - Multithreading
+  - Blacklist
+  - test_ext
+  - Category selection
