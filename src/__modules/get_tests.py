@@ -30,10 +30,6 @@ class Build():
     Module that will parse the subdirectories to find all tests files and build
     a TestTree with them
   """
-  def __init__(self, level):
-    self.level = level
-    self.info = {}
-
 
   def __call__(self, info):
     """
@@ -42,7 +38,20 @@ class Build():
       info dic with the key 'TestTree'
     """
     self.info = info
-    self.info['TestTree'] = self._gen_tree(self.level)
+    root = TestTree(0, '', 'Total')
+    total = 0
+
+    for path in self.info['test_path']:
+      for f in os.listdir(path):
+        if os.path.isdir(f):
+          os.chdir(f)
+          root.subcat.append(self._gen_tree(1))
+          total += root.subcat[-1].total
+          os.chdir('../')
+
+    root.total = total
+
+    self.info['TestTree'] = root
     return self.info
 
 

@@ -81,7 +81,7 @@ def main():
   # Add tasks
   task.add(Config())
   task.add(Parse_arg())
-  task.add(Build(0))
+  task.add(Build())
   task.add(Run())
   task.add(Output())
 

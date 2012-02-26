@@ -24,6 +24,7 @@ from Customize_me import Test
 from test_tree import TestTree
 from display import *
 
+import random
 
 class Run():
   """
@@ -50,21 +51,23 @@ class Run():
       Exec the tests recurcively on each category
     """
     printHeader(tree.cat, tree.level)
-    tree.total = len(tree.tests)
     success, fail = 0, 0
 
     for test in tree.tests:
       res = test(tree.info)
       if res:
-        tree.success += 1
+        success += 1
         printSuccess(test.f)
       else:
-        tree.success += 1
+        fail += 1
         printFail(test.f, test.error_get())
 
     for sub in tree.subcat:
       tmp_succ, tmp_fail = self._run_tests(sub)
       success += tmp_succ
       fail += tmp_fail
+
+    tree.success = success
+    tree.fail = fail
 
     return success, fail

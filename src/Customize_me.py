@@ -19,11 +19,23 @@
 #
 ################################################################################
 
+import random
+
+
 def logo_print():
   """
     If you want to print a logo when the test_suit is runned
   """
-  return
+
+print "\n\
+   ______      _____ _               _          \n\
+   | ___ \    /  __ \ |             | |         \n\
+   | |_/ /   _| /  \/ |__   ___  ___| | __      \n\
+   |  __/ | | | |   | '_ \ / _ \/ __| |/ /      \n\
+   | |  | |_| | \__/\ | | |  __/ (__|   <       \n\
+   \_|   \__, |\____/_| |_|\___|\___|_|\_\      \n\
+          __/ |                                 \n\
+         |___/                                  "
 
 
 
@@ -87,7 +99,10 @@ class Test:
       Run the test, you can do anything you want but you must
       return True (if the tests has succeeded) of False (otherwise)
     """
-    return True
+    if random.randint(0, 1):
+      return True
+    else:
+      return False
 
 
   def error_get(self):

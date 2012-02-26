@@ -3,7 +3,6 @@
 ###        ###
 
 ~ Support display and db modules
-~ Get ride of the 'src' in the display.py / result function
 ~ dependencies system in the command design pattern
 ~ output.py module to output files like html, image, latex, etc..
 ~ Config file to determine some general options
@@ -14,3 +13,4 @@
 ~ pretty-printer
 ~ output module
 ~ Add a multithread option
+

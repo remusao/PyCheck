@@ -46,6 +46,9 @@ class Output():
       # Log results in db and print graph
       if 'graph' in out_list and 'db' in out_list:
         self._db_graph()
+    if 'prettyprint' in self.info:
+      if self.info['prettyprint']:
+        self.info['TestTree'].pretty_print()
 
     return info
 
@@ -58,13 +61,14 @@ class Output():
     cursor = connection.cursor()
 
     db_create_if_need(cursor)
+    print self.info['TestTree'].success
+    print self.info['TestTree'].fail
     db_insert(cursor, self.info['TestTree'].success,
                       self.info['TestTree'].fail)
 
     cat = {}
     for sub in self.info['TestTree'].subcat:
       cat[sub.cat] = (sub.success, sub.fail)
-    print cat
     graph(cat, cursor)
 
     connection.commit()
