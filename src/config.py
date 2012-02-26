@@ -116,10 +116,13 @@ class Config():
 
     ############################### __ OUTPUT __ ###############################
     # This option specifies if you want some output (graph, db, etc..)
+    # Supported options are :
+    #   - graph : (log results into DB and display the graph)
+    #   - sumup : Display detail about tests that failed
     # Type = [string]
-    # Default = ['graph']
+    # Default = ['graph', 'sumup']
 
-    info['output'] = ['graph']
+    info['output'] = ['graph', 'sumup']
 
 
     ############################################################################

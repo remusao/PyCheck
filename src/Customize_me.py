@@ -54,6 +54,12 @@ def epilog():
   return
 
 
+#
+#
+#    THE TEST OBJECT
+#
+#
+
 
 class Test:
   """
@@ -69,6 +75,17 @@ class Test:
     self.prefix = prefix
     self.f = f
     self.result = False
+
+  #############################################################################
+  #        ____ _  _ ____ ___ ____ _  _ _  ___  ____    ___ _  _ _ ____       #
+  #        |    |  | [__   |  |  | |\/| | [___  |___     |  |__| | [__        #
+  #        |___ |__| ___]  |  |__| |  | | ___]  |___     |  |  | | ___]       #
+  #                                                                           #
+  #                        ___  ____ ____ ___                                 #
+  #                        |__] |__| |__/  |                                  #
+  #                        |    |  | |  \  |                                  #
+  #                                                                           #
+  #############################################################################
 
 
   def __str__(self):
@@ -92,6 +109,7 @@ class Test:
     self.result = self._run()
     return self.result
 
+
   def _run(self):
     """
       ! Will be called by __call__
@@ -106,7 +124,8 @@ class Test:
 
   def error_get(self):
     """
-      In case of failure return an error message that will be printed in the output
+      In case of failure return a *ONE-LINE* error message that will be printed
+      in the output
       ! Warning : if you use colors (with \033[xxm command), the nb_col_mark var must
       contain the number of balises you used
     """
@@ -114,3 +133,29 @@ class Test:
     nb_col_mark = 0
     # (nb_col_mark, message)
     return (nb_col_mark, message)
+
+
+  def sumup_print(self):
+    """
+      This method will be called to display a summary of tests that failed.
+      You could for exemple print a description of the test, error message,
+      and in case of a subprocess invocation, a return code, a stdout and
+      stderr.
+    """
+    print "Description : 42"
+    print "returned 2 instead of 0"
+    print "Stderr : error number 1337"
+    print "Stdout : I decided to crash !"
+
+
+  #############################################################################
+  #                           ____ _  _ ___     ____ ____                     #
+  #                           |___ |\ | |  \    |  | |___                     #
+  #                           |___ | \| |__/    |__| |                        #
+  #                                                                           #
+  #             ____ _  _ ____ ___ ____ _  _ _ ____ ____ ___ _ ____ _  _      #
+  #             |    |  | [__   |  |  | |\/| | [__  |__|  |  | |  | |\ |      #
+  #             |___ |__| ___]  |  |__| |  | | ___] |  |  |  | |__| | \|      #
+  #                                                                           #
+  #############################################################################
+

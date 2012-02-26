@@ -66,7 +66,7 @@ class Output():
     db_insert(cursor, tree.success, tree.fail)
 
     print
-    confirm = raw_input('Do you wan to display graph ? (y/n) ')
+    confirm = raw_input('Do you want to display the graph ? (y/n) ')
     if confirm == 'y' or confirm == 'Y':
       cat = {}
       for sub in tree.subcat:
@@ -82,4 +82,28 @@ class Output():
     """
       Display the tests that failed with useful informations
     """
-    return
+    print
+    confirm = raw_input('Do you want to display a sum-up ? (y/n) ')
+    if confirm != 'y' and confirm != 'Y':
+      return
+
+    print
+    print "__--* Sumup of the fails *--__"
+    print
+
+    for sub in self.info['TestTree'].subcat:
+      self._print_rec_sumup(sub)
+
+
+  def _print_rec_sumup(self, tree):
+    """
+      Parse the TestTree to display a sumup about tests that failed
+    """
+    # sumup_print()
+    for t in tree.tests:
+      if not t.result:
+        print '\033[32m', tree.cat, '\033[37m', '-->', '\033[33m', t.f, '\033[37m'
+        t.sumup_print()
+        print
+    for sub in tree.subcat:
+      self._print_rec_sumup(sub)
