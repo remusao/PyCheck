@@ -57,11 +57,12 @@ class Build():
         # Check file extension and blacklist
         if not self._is_valid(f):
           continue
-        if os.path.isdir(f):
-          os.chdir(f)
-          root.subcat.append(self._gen_tree(1))
-          total += root.subcat[-1].total
-          os.chdir('../')
+        if 'all' in self.info['categories'] or f in self.info['categories']:
+          if os.path.isdir(f):
+            os.chdir(f)
+            root.subcat.append(self._gen_tree(1))
+            total += root.subcat[-1].total
+            os.chdir('../')
 
     root.total = total
     self.info['TestTree'] = root
@@ -88,10 +89,11 @@ class Build():
 
       # Parse subdir and maj test_list
       if os.path.isdir(f):
-        os.chdir(f)
-        cat.subcat.append(self._gen_tree(level + 1))
-        cat.total += cat.subcat[-1].total
-        os.chdir('../')
+        if 'all' in self.info['categories'] or f in self.info['categories']:
+          os.chdir(f)
+          cat.subcat.append(self._gen_tree(level + 1))
+          cat.total += cat.subcat[-1].total
+          os.chdir('../')
       elif level > 0:
         cat.tests.append(Test(prefix, f, cat_name))
 
@@ -104,10 +106,12 @@ class Build():
     """
       Check if a file is valid according to blacklist and file_ext
     """
+    # Check blacklist
     for pat in self.info['black_list']:
       if pat.match(f):
         return False
 
+    # Check file_ext
     for pat in self.info['file_ext']:
       if pat.match(f):
         return True

@@ -13,6 +13,3 @@ OPTIONS :
   - Verbosity
   - MemCheck
   - Multithreading
-  - Blacklist
-  - test_ext
-  - Category selection
