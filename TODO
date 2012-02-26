@@ -5,12 +5,8 @@
 ~ Support display and db modules
 ~ dependencies system in the command design pattern
 ~ output.py module to output files like html, image, latex, etc..
-~ Config file to determine some general options
 ~ Timeout management
 ~ Mem check
 ~ Categories selection
 ~ verbosity
-~ pretty-printer
-~ output module
 ~ Add a multithread option
-
