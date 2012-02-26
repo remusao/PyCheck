@@ -43,7 +43,12 @@ def prelude():
   """
     You can do here something that you want *before* everything starts
   """
+
+  ##### FIXME ####
+
   return
+
+  #### END OF FIX ###
 
 
 
@@ -51,7 +56,12 @@ def epilog():
   """
     You can do here something that will be done after everything else
   """
+
+  #### FIX ME ####
+
   return
+
+  #### END OF FIX ####
 
 
 #
@@ -95,8 +105,13 @@ class Test:
       It's usefull to have a good output that could be printed in the
       fail_test summary
     """
-    return '\n'.join(self.f,
-                     'success')
+
+    #### FIX ME ###
+
+    return '\n'.join(self.f, 'success')
+
+    #### END OF FIX
+
 
   def __call__(self, info):
     """
@@ -105,9 +120,14 @@ class Test:
       Info is a dictionary that contains every options present
       in the info file, the command line or the config file.
     """
+
+    #### FIX ME ####
+
     self.info = info
     self.result = self._run()
     return self.result
+
+    #### END OF FIX ####
 
 
   def _run(self):
@@ -116,10 +136,15 @@ class Test:
       Run the test, you can do anything you want but you must
       return True (if the tests has succeeded) of False (otherwise)
     """
+
+    #### FIX ME ####
+
     if random.randint(0, 1):
       return True
     else:
       return False
+
+    #### END OF FIX ####
 
 
   def error_get(self):
@@ -129,10 +154,15 @@ class Test:
       ! Warning : if you use colors (with \033[xxm command), the nb_col_mark var must
       contain the number of balises you used
     """
+
+    #### FIX ME ####
+
     message = "error"
     nb_col_mark = 0
     # (nb_col_mark, message)
     return (nb_col_mark, message)
+
+    #### END OF FIX ####
 
 
   def sumup_print(self):
@@ -142,10 +172,15 @@ class Test:
       and in case of a subprocess invocation, a return code, a stdout and
       stderr.
     """
+
+    #### FIX ME ####
+
     print "Description : 42"
     print "returned 2 instead of 0"
     print "Stderr : error number 1337"
     print "Stdout : I decided to crash !"
+
+    #### END OF FIX ####
 
 
   #############################################################################
