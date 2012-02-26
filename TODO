@@ -3,7 +3,6 @@
 ###        ###
 
 GENERAL :
-  - Support display and db modules
   - Dependencies system in the command design pattern
   - complete output.py module
   - Clean and factorise code in run_test module (improve category display)
