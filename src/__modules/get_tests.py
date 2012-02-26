@@ -59,7 +59,7 @@ class Build():
       os.chdir(tmp_path)
       path = os.path.expanduser(path)
       os.chdir(path)
-      for f in os.listdir(path):
+      for f in os.listdir(os.getcwd()):
         if os.path.isdir(f) and self._is_dir_valid(f):
           os.chdir(f)
           tmp = self._gen_tree(1)

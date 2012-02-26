@@ -6,10 +6,10 @@ GENERAL :
   - Support display and db modules
   - Dependencies system in the command design pattern
   - complete output.py module
-  - timeout management
-  - Fix a bug to delete empty categories
+  - Clean and factorise code in run_test module (improve category display)
 
 
 OPTIONS :
   - MemCheck
   - Multithreading
+  - timeout management

@@ -89,11 +89,12 @@ class Test:
       in the info file, the command line or the config file.
     """
     self.info = info
-    self.result = self.run()
+    self.result = self._run()
     return self.result
 
-  def run(self):
+  def _run(self):
     """
+      ! Will be called by __call__
       Run the test, you can do anything you want but you must
       return True (if the tests has succeeded) of False (otherwise)
     """

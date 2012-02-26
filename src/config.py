@@ -58,7 +58,7 @@ class Config():
     # type = [string]
     # Default = ['*']
 
-    info['file_ext'] = ['.*leo', '.*tig', '.*tih']
+    info['file_ext'] = ['.*']
 
 
     ############################### __ BLACKLIST __  ###########################
@@ -75,7 +75,7 @@ class Config():
     # Type = bool
     # Default = False
 
-    info['multithreading'] = False
+    info['multithreading'] = True
 
 
     ############################ __ MEMCHECK __  ###############################
@@ -119,7 +119,7 @@ class Config():
     # Type = [string]
     # Default = ['graph']
 
-    info['output'] = []
+    info['output'] = ['graph']
 
 
     ############################################################################

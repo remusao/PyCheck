@@ -24,7 +24,9 @@ from Customize_me import Test
 from test_tree import TestTree
 from display import *
 
-import random
+import threading
+import Queue
+
 
 class Run():
   """
@@ -47,7 +49,10 @@ class Run():
     if self.info['verbose']:
       for sub in t.subcat:
         printHeader(sub.cat, 1)
-        tmp_success, tmp_fail = self._run_tests(sub, self._print_verbose)
+        if self.info['multithreading']:
+          tmp_success, tmp_fail = self._run_multithread(sub, self._print_verbose)
+        else: 
+          tmp_success, tmp_fail = self._run_tests(sub, self._print_verbose)
         tot_success += tmp_success
         tot_fail += tmp_fail
       t.success, t.fail = tot_success, tot_fail
@@ -55,7 +60,10 @@ class Run():
     else:
       for sub in t.subcat:
         printHeader(sub.cat, 1)
-        tmp_success, tmp_fail = self._run_tests(sub, self._print_no_verbose)
+        if self.info['multithreading']:
+          tmp_success, tmp_fail = self._run_multithread(sub, self._print_no_verbose)
+        else:
+          tmp_success, tmp_fail = self._run_tests(sub, self._print_no_verbose)
         tot_success += tmp_success
         tot_fail += tmp_fail
         printBar(sub.cat, (sub.success, sub.fail), mcat, sub.fail, sub.success)
@@ -68,10 +76,21 @@ class Run():
     return self.info
 
 
+  def _run_multithread(self, tree, print_res):
+    """
+      Exec the tests recurcively on each category
+      -> Multithreading
+    """
+    return self._run_tests(tree, print_res)
+
+
   def _run_tests(self, tree, print_res):
     """
       Exec the tests recurcively on each category
+      -> No multithreading
     """
+    if self.info['verbose'] and tree.level > 1:
+      printHeader(tree.cat, tree.level)
     success, fail = 0, 0
 
     for test in tree.tests:

@@ -58,19 +58,21 @@ class Output():
     """
       Log results in the db and display the graph
     """
+    tree = self.info['TestTree']
     connection = db_init()
     cursor = connection.cursor()
 
     db_create_if_need(cursor)
-    print self.info['TestTree'].success
-    print self.info['TestTree'].fail
-    db_insert(cursor, self.info['TestTree'].success,
-                      self.info['TestTree'].fail)
+    db_insert(cursor, tree.success, tree.fail)
 
-    cat = {}
-    for sub in self.info['TestTree'].subcat:
-      cat[sub.cat] = (sub.success, sub.fail)
-    graph(cat, cursor)
+    print
+    confirm = raw_input('Do you wan to display graph ? (y/n) ')
+    if confirm == 'y' or confirm == 'Y':
+      cat = {}
+      for sub in tree.subcat:
+        cat[sub.cat] = (sub.success, sub.fail)
+      cat['all'] = (tree.success, tree.fail)
+      graph(cat, cursor)
 
     connection.commit()
     connection.close()
