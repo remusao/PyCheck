@@ -67,7 +67,7 @@ class Config():
     # type = [string]
     # Default = []
 
-    info['black_list'] = ['__.*', '*.swp', 'info']
+    info['black_list'] = ['__.*', '.*.swp', 'info']
 
 
     ############################ __ MULTITHREADING __ ##########################

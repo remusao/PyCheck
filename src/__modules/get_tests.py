@@ -20,7 +20,7 @@
 ################################################################################
 
 
-import sys, os 
+import sys, os, re
 from Customize_me import Test
 from test_tree import TestTree
 
@@ -40,9 +40,23 @@ class Build():
     self.info = info
     root = TestTree(0, '', 'Total')
     total = 0
+    
+    # Compile regexp for file extension
+    file_ext = info['file_ext']
+    for line, pattern in enumerate(file_ext):
+      info['file_ext'][line] = re.compile(pattern)
 
+    # Compile regexp for blacklist
+    blacklist = info['black_list']
+    for line, pattern in enumerate(blacklist):
+      info['black_list'][line] = re.compile(pattern)
+
+    # Visit each path to find tests
     for path in self.info['test_path']:
       for f in os.listdir(path):
+        # Check file extension and blacklist
+        if not self._is_valid(f):
+          continue
         if os.path.isdir(f):
           os.chdir(f)
           root.subcat.append(self._gen_tree(1))
@@ -50,8 +64,8 @@ class Build():
           os.chdir('../')
 
     root.total = total
-
     self.info['TestTree'] = root
+
     return self.info
 
 
@@ -66,9 +80,13 @@ class Build():
     cat = TestTree(level, prefix, cat_name)
     cat.info = self._readInfo()
 
+    # Visit files and subdir
     for f in os.listdir(prefix):
-      if f == "__modules":
+      # Check file extension and blacklist
+      if not self._is_valid(f):
         continue
+
+      # Parse subdir and maj test_list
       if os.path.isdir(f):
         os.chdir(f)
         cat.subcat.append(self._gen_tree(level + 1))
@@ -80,6 +98,21 @@ class Build():
     cat.total += len(cat.tests)
 
     return cat
+
+
+  def _is_valid(self, f):
+    """
+      Check if a file is valid according to blacklist and file_ext
+    """
+    for pat in self.info['black_list']:
+      if pat.match(f):
+        return False
+
+    for pat in self.info['file_ext']:
+      if pat.match(f):
+        return True
+
+    return False
 
 
   def _readInfo(self):
