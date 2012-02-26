@@ -44,7 +44,7 @@ class Output():
       if 'sumup' in out_list:
         self._sumup()
       # Log results in db and print graph
-      if 'graph' in out_list and 'db' in out_list:
+      if 'graph' in out_list:
         self._db_graph()
     if 'prettyprint' in self.info:
       if self.info['prettyprint']:

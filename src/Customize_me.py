@@ -35,7 +35,7 @@ print "\n\
    | |  | |_| | \__/\ | | |  __/ (__|   <       \n\
    \_|   \__, |\____/_| |_|\___|\___|_|\_\      \n\
           __/ |                                 \n\
-         |___/                                  "
+         |___/                                  \n"
 
 
 
@@ -60,7 +60,7 @@ class Test:
     The class you must customize to do the tests you want on each file
   """
 
-  def __init__(self, prefix, f, category):
+  def __init__(self, prefix, f):
     """
       prefix : contains the absolute prefix of the file (eg : /home/...)
       f : name of the file that contains the test
@@ -68,8 +68,7 @@ class Test:
     """
     self.prefix = prefix
     self.f = f
-    self.category = category
-    self.result = True
+    self.result = False
 
 
   def __str__(self):
@@ -80,7 +79,6 @@ class Test:
       fail_test summary
     """
     return '\n'.join(self.f,
-                     self.category,
                      'success')
 
   def __call__(self, info):

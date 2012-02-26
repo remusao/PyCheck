@@ -37,6 +37,7 @@ class Build():
       The resulting tree is then stored in the
       info dic with the key 'TestTree'
     """
+    self.max_cat = 5
     self.info = info
     root = TestTree(0, '', 'Total')
     total = 0
@@ -52,6 +53,7 @@ class Build():
       info['black_list'][line] = re.compile(pattern)
 
     tmp_path = os.getcwd()
+
     # Visit each path to find tests
     for path in self.info['test_path']:
       os.chdir(tmp_path)
@@ -62,12 +64,15 @@ class Build():
           os.chdir(f)
           tmp = self._gen_tree(1)
           if tmp.total:
+            if len(tmp.cat) > self.max_cat:
+              self.max_cat = len(tmp.cat)
             root.subcat.append(tmp)
             total += tmp.total
           os.chdir('../')
 
     root.total = total
     self.info['TestTree'] = root
+    self.info['max_cat_len'] = self.max_cat
 
     return self.info
 
@@ -77,9 +82,11 @@ class Build():
       Method that will parse subdirectories to find all files
       and build a TestTree with it
     """
-    # Create a new node
+    # Get path prefix and category name
     prefix = os.getcwd()
     cat_name = os.path.basename(prefix)
+
+    # Create a new node
     cat = TestTree(level, prefix, cat_name)
     cat.info = self._readInfo()
 
@@ -94,11 +101,12 @@ class Build():
           cat.total += tmp.total
         os.chdir('../')
       elif self._is_file_valid(f):
-        cat.tests.append(Test(prefix, f, cat_name))
+        cat.tests.append(Test(prefix, f))
 
     cat.total += len(cat.tests)
 
     return cat
+
 
   def _is_dir_valid(self, d):
     """
@@ -149,7 +157,5 @@ class Build():
           option = line.split('=')
           if option[1] and option[0]:
             info_tmp[option[0]] = option[1]
-    else:
-      info = None
 
     return info_tmp

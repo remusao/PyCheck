@@ -50,7 +50,7 @@ class Config():
     # Type = [string]
     # Default = ./
 
-    info['test_path'] = ['./', '~/Miniproj/TC3/berson_r/']
+    info['test_path'] = ['./']
 
 
     ############################### __ FILE_EXT __  ############################
@@ -58,7 +58,7 @@ class Config():
     # type = [string]
     # Default = ['*']
 
-    info['file_ext'] = ['.*leo']
+    info['file_ext'] = ['.*leo', '.*tig', '.*tih']
 
 
     ############################### __ BLACKLIST __  ###########################
@@ -117,9 +117,9 @@ class Config():
     ############################### __ OUTPUT __ ###############################
     # This option specifies if you want some output (graph, db, etc..)
     # Type = [string]
-    # Default = ['graph', 'db']
+    # Default = ['graph']
 
-    info['output'] = ['graph']
+    info['output'] = []
 
 
     ############################################################################

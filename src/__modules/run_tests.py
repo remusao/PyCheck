@@ -40,30 +40,51 @@ class Run():
       the TestTree and then print the summary.
     """
     self.info = info
-    self._run_tests(info['TestTree'])
-    printResult(info['TestTree'])
+    t = self.info['TestTree']
+    mcat = self.info['max_cat_len']
+    tot_success, tot_fail = 0, 0
+
+    if self.info['verbose']:
+      for sub in t.subcat:
+        printHeader(sub.cat, 1)
+        tmp_success, tmp_fail = self._run_tests(sub, self._print_verbose)
+        tot_success += tmp_success
+        tot_fail += tmp_fail
+      t.success, t.fail = tot_success, tot_fail
+      printResult(t)
+    else:
+      for sub in t.subcat:
+        printHeader(sub.cat, 1)
+        tmp_success, tmp_fail = self._run_tests(sub, self._print_no_verbose)
+        tot_success += tmp_success
+        tot_fail += tmp_fail
+        printBar(sub.cat, (sub.success, sub.fail), mcat, sub.fail, sub.success)
+      t.success, t.fail = tot_success, tot_fail
+      print
+      printHeader('# Summary #', 1)
+      printBar(t.cat, (t.success, t.fail), mcat, t.fail, t.success)
+      print
 
     return self.info
 
 
-  def _run_tests(self, tree):
+  def _run_tests(self, tree, print_res):
     """
       Exec the tests recurcively on each category
     """
-    printHeader(tree.cat, tree.level)
     success, fail = 0, 0
 
     for test in tree.tests:
       res = test(tree.info)
       if res:
         success += 1
-        printSuccess(test.f)
+        print_res(test.f, '', True)
       else:
         fail += 1
-        printFail(test.f, test.error_get())
+        print_res(test.f, test.error_get(), False)
 
     for sub in tree.subcat:
-      tmp_succ, tmp_fail = self._run_tests(sub)
+      tmp_succ, tmp_fail = self._run_tests(sub, print_res)
       success += tmp_succ
       fail += tmp_fail
 
@@ -71,3 +92,21 @@ class Run():
     tree.fail = fail
 
     return success, fail
+
+
+  def _print_verbose(self, f, mess, succ):
+    """
+      Print result (fail and success) when option verbose is present
+    """
+    if succ:
+      printSuccess(f)
+    else:
+      printFail(f, mess)
+
+
+
+  def _print_no_verbose(self, *nop):
+    """
+      If option verbose is false, call the void method
+    """
+    return

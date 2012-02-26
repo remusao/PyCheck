@@ -7,9 +7,9 @@ GENERAL :
   - Dependencies system in the command design pattern
   - complete output.py module
   - timeout management
+  - Fix a bug to delete empty categories
 
 
 OPTIONS :
-  - Verbosity
   - MemCheck
   - Multithreading
