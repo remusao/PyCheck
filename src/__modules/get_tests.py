@@ -20,7 +20,8 @@
 ###############################################################################
 
 
-import sys, os, re
+
+import sys, os, fnmatch, glob
 from Customize_me import Test
 from test_tree import TestTree
 
@@ -42,26 +43,24 @@ class Build():
     root = TestTree(0, '', 'Total')
     total = 0
     
-    # Compile regexp for file extension
-    file_ext = info['file_ext']
-    for line, pattern in enumerate(file_ext):
-      info['file_ext'][line] = re.compile(pattern)
-
-    # Compile regexp for blacklist
-    blacklist = info['black_list']
-    for line, pattern in enumerate(blacklist):
-      info['black_list'][line] = re.compile(pattern)
-
     tmp_path = os.getcwd()
 
     # Visit each path to find tests
     for path in self.info['test_path']:
-      os.chdir(tmp_path)
+      if path in info['blacklist']:
+        continue
+        os.chdir(tmp_path)
       path = os.path.expanduser(path)
-      os.chdir(path)
+      try:
+        os.chdir(path)
+      except:
+        continue
       for f in os.listdir(os.getcwd()):
         if os.path.isdir(f) and self._is_dir_valid(f):
-          os.chdir(f)
+          try:
+            os.chdir(f)
+          except:
+            continue
           tmp = self._gen_tree(1)
           if tmp.total:
             if len(tmp.cat) > self.max_cat:
@@ -94,7 +93,10 @@ class Build():
     for f in os.listdir(prefix):
       # Parse subdir and maj test_list
       if os.path.isdir(f) and self._is_dir_valid(f):
-        os.chdir(f)
+        try:
+          os.chdir(f)
+        except:
+          continue
         tmp = self._gen_tree(level + 1)
         if tmp.total:
           cat.subcat.append(tmp)
@@ -114,9 +116,8 @@ class Build():
       and blacklist
     """
     # Check blacklist
-    for pat in self.info['black_list']:
-      if pat.match(d):
-        return False
+    if d in self.info['blacklist']:
+      return False
 
     if 'all' in self.info['categories']:
       return True
@@ -131,13 +132,17 @@ class Build():
       Check if a file is valid according to blacklist and file_ext
     """
     # Check blacklist
-    for pat in self.info['black_list']:
-      if pat.match(f):
+    if f in self.info['blacklist']:
+      return False
+
+    # Check ignore list
+    for pat in self.info['ignore']:
+      if fnmatch.fnmatch(f, pat):
         return False
 
     # Check file_ext
     for pat in self.info['file_ext']:
-      if pat.match(f):
+      if fnmatch.fnmatch(f, pat):
         return True
 
     return False

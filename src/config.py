@@ -42,7 +42,6 @@ class Config():
 
   def __call__(self, info):
 
-    #self.info = self.info
 
     ############################## __ TEST_PATH __  ############################
     # This option specifies where the test_suit will look for your tests. You can
@@ -50,15 +49,24 @@ class Config():
     # Type = [string]
     # Default = ./
 
-    info['test_path'] = ['./']
+    info['test_path'] = ['~/Miniproj']
 
 
     ############################### __ FILE_EXT __  ############################
-    # This option specifies what extension the test_files must have. Give a regexp
+    # This option specifies what extension the test_files must have. Give a
+    # wildcard. (like you would do for globing)
     # type = [string]
     # Default = ['*']
 
-    info['file_ext'] = ['.*']
+    info['file_ext'] = ['*leo']
+
+
+    ################################ __ IGNORE __  #############################
+    # This option specifies a list of extentions to ignore when grabbing tests.
+    # type = [string]
+    # Default = ['*swp']
+
+    info['ignore'] = []
 
 
     ############################### __ BLACKLIST __  ###########################
@@ -67,7 +75,7 @@ class Config():
     # type = [string]
     # Default = []
 
-    info['black_list'] = ['__.*', '.*.swp', 'info']
+    info['blacklist'] = ['__modules', 'info']
 
 
     ############################ __ MULTITHREADING __ ##########################
