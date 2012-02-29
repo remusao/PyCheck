@@ -19,6 +19,7 @@
 #                                                                             #
 ###############################################################################
 
+import os, signal, time
 import random
 
 
@@ -132,6 +133,10 @@ class Test:
 
   def _run(self):
     """
+      TIMEOUT : If you want to check timeout on subprocess, use the
+      method self.timeout_wait(process, timeout) where process is your
+      subprocess object and timeout is ine seconds
+
       ! Will be called by __call__
       Run the test, you can do anything you want but you must
       return True (if the tests has succeeded) of False (otherwise)
@@ -194,3 +199,33 @@ class Test:
   #                                                                           #
   #############################################################################
 
+
+  def _kill_process(self, process):
+    """
+      Kill the process given as argument
+    """
+    try:
+      os.kill(process.pid, signal.SIGTERM)
+      if self.timeout_wait(process, 1) is not None:
+        os.kill(process.pid, signal.SIGKILL)
+    except OSError:
+      pass
+
+
+  def timeout_wait(self, process, timeout):
+    """
+      wait for the given process to terminate.
+      If timeout (in seconds), kill the process
+    """
+    t0 = time.time()
+    delay = min(0.5, timeout)
+    while True:
+      time.sleep(delay)
+      returncode = process.poll()
+      if returncode is not None:
+        return returncode
+      tnow = time.time()
+      if (tnow - t0) >= timeout:
+        self._kill_process(process)
+        return -1
+      delay = min(delay * 2, timeout)
