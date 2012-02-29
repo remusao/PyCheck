@@ -20,9 +20,13 @@
 ###############################################################################
 
 
-from pygame.locals import *
-import pygame, math, sys
-from db import *
+try:
+  from pygame.locals import *
+  import pygame, math, sys
+  from db import *
+  py_import = True
+except:
+  py_import = False
 
 # Some constants about rendering
 

@@ -85,13 +85,18 @@ class Output():
     db_create_if_need(cursor)
     db_insert(cursor, tree.success, tree.fail)
 
-    confirm = raw_input('Do you want to display the graph ? (y/n) ')
-    if confirm == 'y' or confirm == 'Y':
-      cat = {}
-      for sub in tree.subcat:
-        cat[sub.cat] = (sub.success, sub.fail)
-      cat['all'] = (tree.success, tree.fail)
-      graph(cat, cursor)
+    try:
+      import pygame
+    except:
+      print "Pygame module is not present on your computer"
+    else:
+      confirm = raw_input('Do you want to display the graph ? (y/n) ')
+      if confirm == 'y' or confirm == 'Y':
+        cat = {}
+        for sub in tree.subcat:
+          cat[sub.cat] = (sub.success, sub.fail)
+        cat['all'] = (tree.success, tree.fail)
+        graph(cat, cursor)
 
     connection.commit()
     connection.close()

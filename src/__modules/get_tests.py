@@ -160,7 +160,7 @@ class Build():
       for line in lines:
         if line is not '':
           option = line.split('=')
-          if option[1] and option[0]:
+          if len(option) > 1 and option[1] and option[0]:
             info_tmp[option[0]] = option[1]
 
     return info_tmp

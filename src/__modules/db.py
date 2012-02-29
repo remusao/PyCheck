@@ -22,7 +22,6 @@
 
 import sqlite3 as lite
 import time
-import pygame
 
 mark_color = (255, 255, 0, 0)
 total_curve_color = (0, 0, 255, 0)
