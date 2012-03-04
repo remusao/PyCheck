@@ -5,6 +5,11 @@
 GENERAL :
   - Dependencies system in the command design pattern
   - complete output.py module
+  - Change name of info file (clash with info dictionary)
+  - Change info file management to write it in python
+  - Add test example in Test class (with subprocess)
+  - Add a prelude function for each cat
+  - Create a ProgressBar class
 
 
 CLEANING AND FACTORING :
@@ -13,6 +18,4 @@ CLEANING AND FACTORING :
 
 
 OPTIONS :
-  - MemCheck
   - Multithreading
-  - timeout management
