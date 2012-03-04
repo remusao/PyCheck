@@ -49,7 +49,7 @@ class Config():
     # Type = [string]
     # Default = ./
 
-    info['test_path'] = ['~/Miniproj']
+    info['test_path'] = ['./']
 
 
     ############################### __ FILE_EXT __  ############################

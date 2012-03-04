@@ -22,7 +22,7 @@
 
 
 import sys, os, fnmatch, glob
-from Customize_me import Test
+from Customize_me import Test, prelude_cat
 from test_tree import TestTree
 
 
