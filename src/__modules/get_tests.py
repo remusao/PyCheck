@@ -89,6 +89,10 @@ class Build():
     cat = TestTree(level, prefix, cat_name)
     cat.info = self._readInfo()
 
+    # Call the prelude function
+    prelude_cat(cat.info)
+
+
     # Visit files and subdir
     for f in os.listdir(prefix):
       # Parse subdir and maj test_list

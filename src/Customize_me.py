@@ -47,9 +47,34 @@ def prelude():
 
   ##### FIXME ####
 
-  return
+  pass
 
   #### END OF FIX ###
+
+
+def prelude_cat(args):
+  """
+    This function will be called in every directory, before testing
+  """
+
+  ##### FIXME #####
+
+  pass
+
+  ##### END OF FIX ####
+
+
+
+def epilog_cat():
+  """
+    This function will be called in every directory, after testing
+  """
+
+  ##### FIXME #####
+
+  pass
+
+  ##### END OF FIX ####
 
 
 
@@ -60,7 +85,7 @@ def epilog():
 
   #### FIX ME ####
 
-  return
+  pass
 
   #### END OF FIX ####
 
@@ -114,7 +139,7 @@ class Test:
     #### END OF FIX
 
 
-  def __call__(self, info):
+  def __call__(self, args):
     """
       Your test will be exec this way, by calling it
       (eg : my_test (info)).
@@ -124,7 +149,7 @@ class Test:
 
     #### FIX ME ####
 
-    self.info = info
+    self.args = args
     self.result = self._run()
     return self.result
 
@@ -212,13 +237,18 @@ class Test:
       pass
 
 
-  def timeout_wait(self, process, timeout):
+  def timeout_wait(self, process, timeout = 0):
     """
       wait for the given process to terminate.
       If timeout (in seconds), kill the process
     """
+    if timeout is 0:
+      if 'timeout' in self.args:
+        timeout = self.args['timeout']
+      else:
+        timeout = 3
     t0 = time.time()
-    delay = min(0.5, timeout)
+    delay = min(0.1, timeout)
     while True:
       time.sleep(delay)
       returncode = process.poll()
