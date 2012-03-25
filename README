@@ -1,24 +1,143 @@
-###                    ###
-##   README : PyCheck   ##
-###                    ###
+                   __________________________________
+                  /                                   \
+                  |------------* Pycheck *------------|
+                  \___________________________________/
 
-
-~ Synopsis :
+ _______
+'       `
+| Brief :
+`_______'
 
   """
-    PyCheck is a Python project that aims to provide a nice-looking
+    - PyCheck is a Python project that aims to provide a nice-looking
     test-suit for projects of any size. With PyCheck, it's really easy
     to manage tests (add, remove, rename categories, add categories, etc.)
     In addition, you have a nice output and a readable overview of the
     results thanks to the graphics and the history which is automagically
     saved in a DataBase.
+
+    - PyCheck lets you realize you own test, you just have to customize the
+    file Customize_me.py that contains the definition of the Test class which
+    represent a test.
+
+    - To manage test, you should just think that each directory is a category,
+    you just have to sort your files by themes and create a directory by test.
+
+    - With Pycheck, it's really easy to adapt the option that you want to
   """
 
 
-~ Dependencies :
+ ______________
+'              `
+| Dependencies :
+`______________'
+
 
   - Python 2.7x
   - Pygame (optionnal, recquiered if you want graphical output)
 
 
-~ Usage :
+ ___________________
+'                   `
+| Quick start guide :
+`___________________'
+
+
+  ~> It's really simple to use, follow these few steps :
+
+    1) Create a 'check' directory in which your testsuit will take place
+    2) Copy the content of the Pycheck src directory into the 'check' dir
+    3) Customize the config.py file
+      i) Specify the emplacements of your tests ('emp1', 'emp2', ...)
+      ii) Specify the extensions of your test files
+    4) Customize the Customize_me.py file
+      i) customize the _run method (line 160) (cf bellow for more details)
+      ii) customize the error_get method (line 181) that specify the reason
+          of the fail, if your test failed.
+      iii) customize the sumup_print method (line 199) in which you could
+          print what you want. This method will be call at the end to
+          display details about tests that failed. So print here everything
+          that could help you to debug.
+    5) You test suit is now ready to work. Just run `./Pycheck.py` to run it.
+
+
+
+ ___________________
+'                   `
+| Detailed features :
+`___________________'
+
+
+  * How could I access the options in the Test object ?
+    -------------------------------------------------
+
+    ~> The argument 'info' given to the __init__ method of the object (ie the
+       constructor) contains every options available for the test (options of
+       the command-line + options of the config.py file + config of the
+       info[.py] files present in each directory). 'info' is a dictionary so
+       you can use it this way :
+
+          - Get an option :
+              info['my_option'] -> return the value of that option
+          - Modify an option :
+              info['my_option'] = new_value
+
+        This way, you could change the behavior of the test_suit on the fly.
+
+
+
+  * How to specify options directory by directory ?
+    ---------------------------------------------
+
+    ~> In each directory (that is, each category), you are allowed to create
+       a file named 'info' (or info.py if you want to directly insert python
+       code). Here is the format :
+
+       * info - You just have to write one option by line, in the format :
+
+          option1=value1
+          option2=value2
+          ...
+
+         Just take into account that the values will be of type string in the
+         info dictionary passed to your Test object. If you want other data
+         types, use the info.py instead.
+
+
+        * info.py - You must write an option by line in this form :
+
+          info['option1'] = value1
+          info['option2'] = value2
+          info['option3'] = value3
+
+
+          Note that, this time, the values could have the data type that
+          you like since it's python code (you could use lists, dict, etc.).
+
+
+       You are allowed to place one info AND one info.py file by category.
+       This options will be present in the info dictionary passed to the
+       constructor of you Test object.
+
+
+
+  * Conflicts between command-line, config.py and info options ?
+    ----------------------------------------------------------
+
+    ~> In case of conflit between names of the options, a priority order
+    apply :
+
+      info[.py]  >  command-line  >  config.py
+
+
+      So you can override every option of the config.py file with the
+       command line. You can override every options of the command-line
+       with your info[.py] files.
+      This system allow a great flexibility.
+
+
+
+  * How to write a test ?
+    -------------------
+
+    ~>  TODO

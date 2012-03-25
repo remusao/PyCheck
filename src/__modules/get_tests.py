@@ -38,6 +38,8 @@ class Build():
       The resulting tree is then stored in the
       info dic with the key 'TestTree'
     """
+
+
     self.max_cat = 5
     self.info = info
     root = TestTree(0, '', 'Total')
@@ -166,5 +168,13 @@ class Build():
           option = line.split('=')
           if len(option) > 1 and option[1] and option[0]:
             info_tmp[option[0]] = option[1]
+    if os.path.exists("info.py") and not os.path.isdir("info.py"):
+      f = file("info.py")
+      content = f.read();
+      names = [x.split('[')[0] for x in content.split('\n') if x != '']
+      env = {}
+      for n in names:
+        env[n] = info_tmp
+      exec(content, env)
 
     return info_tmp

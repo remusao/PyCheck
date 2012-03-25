@@ -53,7 +53,7 @@ def prelude():
   #### END OF FIX ###
 
 
-def prelude_cat(args):
+def prelude_cat(info):
   """
     This function will be called in every directory, before testing
   """
@@ -140,7 +140,7 @@ class Test:
     #### END OF FIX
 
 
-  def __call__(self, args):
+  def __call__(self, info):
     """
       Your test will be exec this way, by calling it
       (eg : my_test (info)).
@@ -150,7 +150,7 @@ class Test:
 
     #### FIX ME ####
 
-    self.args = args
+    self.info = info
     self.result = self._run()
     return self.result
 
@@ -244,8 +244,8 @@ class Test:
       If timeout (in seconds), kill the process
     """
     if timeout is 0:
-      if 'timeout' in self.args:
-        timeout = self.args['timeout']
+      if 'timeout' in self.info:
+        timeout = self.info['timeout']
       else:
         timeout = 3
     t0 = time.time()
